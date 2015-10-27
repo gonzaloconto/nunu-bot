@@ -1,8 +1,8 @@
 # nunu-bot
-Chat Bot
+## Chat Bot
 
-Steps:
+### Steps:
 1-Clone repo.
 2-Install node.
-3-run "npm install".
-4-node app.js.
+3-Run "npm install".
+4-Node app.js.
