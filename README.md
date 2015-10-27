@@ -5,4 +5,4 @@
 1-Clone repo.
 2-Install node.
 3-Run "npm install".
-4-Node app.js.
+4-Run "node app.js".
