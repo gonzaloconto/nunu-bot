@@ -6,7 +6,7 @@ var Config;
 Config = {
     pw: 'asddsa123321',
     user: 'nunu.bot.v1.0@gmail.com',
-    generic_template: '{"command": "GET", "params": { "type": "torrent","query": "Nemo" ,"when": "dd/mm/aaaa", "count": "2" } }',
+    generic_template: '{"command": "GET", "params": { "type": "torrent","query": "Finding Nemo" ,"when": "dd/mm/aaaa", "count": "2" } }',
     commands: [
         "torrent",
         "template"
