@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nunu-Bot reporting</title>
+</head>
+<body>
+    <h1>Nunu Bot</h1>
+    <h2>STEAM featured games</h2>
+    <div id="list-container" >
+        {{#each results}}
+            {{#if discounted}}
+                <div style="background-size: 100%;text-align: center;font-weight: bold;font-size: medium;color: white; background-image: linear-gradient(rgba(0, 0, 0, 0.498039), rgba(0, 0, 0, 0.498039)), url({{this.header_image}});">
+                    <div style="color: white; width: 35em;margin-left: 22em;">
+                        <h3>{{this.name}}</h3>
+                        <p>Discount: {{this.discount_percent}}%</p>
+                        <p>Original Price: U$S{{#math this.original_price "/" '100'}}{{/math}}</p>
+                        <p>Final Price: U$S{{#math this.final_price "/" '100'}}{{/math}}</p>
+                        <p>Windows: {{this.windows_available}}</p>
+                        <p>Mac: {{this.mac_available}}</p>
+                        <p>Linux: {{this.linux_available}}</p>
+                        <p>Controller support: {{this.controller_support}}</p>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</body>
+</html>
