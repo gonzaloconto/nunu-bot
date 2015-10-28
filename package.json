@@ -12,14 +12,12 @@
     "express": "^4.13.3",
     "handlebars": "^4.0.3",
     "hangouts-bot": "^0.1.0",
-    "hbs": "~3.1.0",
     "kickass-torrent": "0.0.3",
     "less-middleware": "1.0.x",
     "mongoose": "^4.2.2",
     "node-xmpp": "^1.0.2",
     "nodemailer": "^1.8.0",
-    "nodemailer-direct-transport": "^1.1.0",
-    "util": "^0.10.3",
-    "xoauth2": "^1.1.0"
+    "request": "^2.65.0",
+    "util": "^0.10.3"
   }
 }

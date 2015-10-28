@@ -5,8 +5,21 @@ var Config;
 
 Config = {
     pw: 'asddsa123321',
-    user: 'nunu.bot.v1.0@gmail.com',
-    generic_template: '{"command": "GET", "params": { "type": "torrent","query": "Finding Nemo" ,"when": "dd/mm/aaaa", "count": "2" } }',
+    user: 'nunu.bot.ninja@gmail.com',
+    STEAM_GAMES : {
+        GREENMANGAMING : {
+            hot_deals: {
+                src: 'http://www.greenmangaming.com/hot-deals'
+            }
+        },
+        STEAM : {
+            featured: {
+                src: 'http://store.steampowered.com/api/featured/',
+                template: 'steam_featured'
+            }
+        }
+    },
+    generic_template: '{"command": "GET", "params": { "type": "torrent","query": "Finding Nemo", "to": "bar@blurdybloop.com, baz@blurdybloop.com" ,"count": "2" } }',
     commands: [
         "torrent",
         "template"
