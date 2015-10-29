@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nunu-Bot reporting</title>
+</head>
+<body>
+<h1>Nunu Bot</h1>
+<div id="list-container">
+    {{#each results}}
+        <h3>{{this.title}}</h3>
+        <span>Comments: {{this.comments}}</span>
+        <p>Seeds: {{this.seeds}}</p>
+        <p>Leechs: {{this.leechs}}</p>
+        <p>Torrent Link: {{this.autoDownloadLink}}</p>
+        <p>Votes: {{this.votes}}</p>
+        <p>Size: {{this.size}}</p>
+        <p>Publication Date: {{this.pubDate}}</p>
+    {{/each}}
+</div>
+</body>
+</html>

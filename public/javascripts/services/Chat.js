@@ -1,14 +1,14 @@
 /**
  * Created by gonzalo on 26/10/15.
  */
-var GChat = require('../handlers/GChat.js'),
+var GChat = require('../controllers/GChat.js'),
     Chat;
 
 
 Chat = function () {
 
     init = function () {
-      this.service = GChat;
+        this.service = new GChat();
     };
 
     return {
@@ -17,5 +17,5 @@ Chat = function () {
 };
 
 
-module.exports = new Chat();
+module.exports = Chat();
 
