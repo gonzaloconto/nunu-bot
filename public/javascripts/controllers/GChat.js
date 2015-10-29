@@ -4,6 +4,7 @@
 var Client = require('./../handlers/Client'),
     kickass = require('kickass-torrent'),
     TemplateService = require('./../services/template'),
+    DatabaseService = require('./../services/database'),
     Config = require('../Config.js'),
     Dictionary = require('../Dictionary.js'),
     request = require("request");
@@ -15,6 +16,7 @@ var GChat = function() {
 
     this.client = new Client();
     this.templateService = new TemplateService();
+    this.databaseService = new DatabaseService();
 
     function executeCommand (command, params, from) {
         var result_msg = {},

@@ -6,6 +6,7 @@ var Config;
 Config = {
     pw: 'asddsa123321',
     user: 'nunu.bot.ninja@gmail.com',
+    database: 'mongodb://gconto:35360542@ds045454.mongolab.com:45454/nunu-bot',
     STEAM_GAMES : {
         GREENMANGAMING : {
             hot_deals: {
