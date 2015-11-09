@@ -3,8 +3,10 @@
  */
 var Client = require('./../handlers/Client'),
     kickass = require('kickass-torrent'),
+    Promise = require('bluebird'),
     TemplateService = require('./../services/template'),
     DatabaseService = require('./../services/database'),
+    ScheduleService = require('./../services/schedule'),
     Config = require('../Config.js'),
     Dictionary = require('../Dictionary.js'),
     request = require("request");
@@ -16,7 +18,27 @@ var GChat = function() {
 
     this.client = new Client();
     this.templateService = new TemplateService();
-    this.databaseService = new DatabaseService();
+    this.databaseService = new DatabaseService().then(function (databaseService) {
+        self.databaseService = databaseService;
+        self.scheduleService = new ScheduleService({databaseService: self.databaseService});
+        buildSchedule()
+            .then(function (schedules) {
+                self.schedule = schedules;
+                doBindings();
+            });
+    });
+
+    function buildSchedule () {
+        var
+            promise = new Promise(function (resolve, reject) {
+                self.scheduleService.getSchedule().then(function (schedules) {
+                    resolve(schedules);
+                });
+            });
+
+        return promise;
+
+    }
 
     function executeCommand (command, params, from) {
         var result_msg = {},
@@ -153,44 +175,59 @@ var GChat = function() {
 
     }
 
-    this.client.xmpp.on('message', function(msg) {
-        var
-            from = msg.attrs.from,
-            body = msg.getChild('body'),
-            error = false,
-            text = body ? body.getText() : '',
-            command,
-            params;
+    function doBindings() {
+        self.client.xmpp.on('presence', function(p) {
+            var show = p.getChild('show'),
+                userId = p.attrs.from,
+                text = 'Friend: ' + userId + ' ' + ( (show) ? (' ('+show.getText()+')') : '' );
+            console.log(text);
 
-        if (!body) return;
+            if (self.databaseService.userRegister) {
+                self.databaseService.userRegister(userId);
+            }
+        });
 
-        try{
-            text = JSON.parse(text);
-        }catch(e){
-            self.client.sendMessage({
-                to: from,
-                text: "I don't understand you ... enter a Valid JSON, type 'TEMPLATE' on the 'type' param"
-            });
-            error = true;
-        }
+        self.client.xmpp.on('message', function(msg) {
+            var
+                from = msg.attrs.from,
+                body = msg.getChild('body'),
+                error = false,
+                text = body ? body.getText() : '',
+                command,
+                params;
 
-        params = text.params;
+            if (!body) return;
 
-        try{
-            command = text.command;
-        }catch(e){
-            self.client.sendMessage({
-                to: from,
-                text: "Command needed"
-            });
-            error = true;
-        }
+            try{
+                text = JSON.parse(text);
+            }catch(e){
+                self.client.sendMessage({
+                    to: from,
+                    text: "I don't understand you ... enter a Valid JSON, type 'TEMPLATE' on the 'type' param"
+                });
+                error = true;
+            }
 
-        if (!error && params) {
-            executeCommand(command, params, from);
-        }
+            params = text.params;
 
-    });
+            try{
+                command = text.command;
+            }catch(e){
+                self.client.sendMessage({
+                    to: from,
+                    text: "Command needed"
+                });
+                error = true;
+            }
+
+            if (!error && params) {
+                executeCommand(command, params, from);
+            }
+
+        });
+    }
+
+
 };
 
 module.exports = GChat;

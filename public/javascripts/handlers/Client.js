@@ -30,14 +30,16 @@ function Handler() {
                 self.xmpp.send(new xmpp.Element('presence'));
             });
 
+            this.xmpp.on('subscribe', function(s) {
+                var xmpp = new xmpp.Element('subscribe');
+                xmpp.acceptSubscription(s.attrs.from);
+                self.xmpp.acceptSubscription(s.attrs.from);
+            });
+
             this.xmpp.on('stanza', function(stanza) {
                 if (stanza.is('presence')){
                     if (stanza.attrs.type === 'subscribe') {
-                        var subscribe_elem = new xmpp.Element('presence', {
-                            to: stanza.attrs.from,
-                            type: 'subscribed'
-                        });
-                        self.xmpp.send('subscribed', subscribe_elem);
+                        self.xmpp.emit('subscribed', stanza);
                     } else {
                         self.xmpp.emit('presence', stanza);
                     }
@@ -47,13 +49,6 @@ function Handler() {
                     }
                 }
             });
-
-            this.xmpp.on('presence', function(p) {
-                var show = p.getChild('show'),
-                    text = 'Friend: ' + p.attrs.from + ' ' + ( (show) ? (' ('+show.getText()+')') : '' );
-                console.log(text);
-            });
-
 
         },
         sendMessage = function (params) {
